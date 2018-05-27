@@ -79,36 +79,30 @@ Vue.use(vueVerify,{
 
 * 对象格式规则配置
 ```js
-    <input
-        v-verify="[
-            {
-              test: [String, Function(value), RegExp], //校验规则,String: 默认定义的规则
-              message: String, //自定义错误提示
-              trigger: String //出发校验事件，['blur', 'change']
-            }
-        ]"
-    />
+    [
+        {
+          test: [String, Function(value), RegExp], //校验规则,String: 默认定义的规则
+          message: String, //自定义错误提示
+          trigger: String //出发校验事件，['blur', 'change']
+        }
+    ]
 ```
 * 符串格式规则配置（[./defaultRules][1]）
 ```js
-    <input
-        v-verify="[
-            'required|mobile' //使用默认定义的规则，多条规则以 '|' 分割，不能自定义 message
-        ]"
-    />
+    [
+        'required|mobile' //使用默认定义的规则，多条规则以 '|' 分割，不能自定义 message
+    ]
 ```
-* 数组格式规则
+* 混合格式规则
 ```js
-    <input
-        v-verify="[
-              {
-                test: [String, Function(value), Test], //校验规则,String: 默认定义的规则， Test 为正则
-                message: String, //自定义错误提示
-                trigger: String //出发校验事件，['blur', 'change']
-              },
-              'required|mobile'
-        ]"
-    />
+    [
+          {
+            test: [String, Function(value), Test], //校验规则,String: 默认定义的规则， Test 为正则
+            message: String, //自定义错误提示
+            trigger: String //出发校验事件，['blur', 'change']
+          },
+          'required|mobile'
+    ]
 ```
 
 #### v-remind
