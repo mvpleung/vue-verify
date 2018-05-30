@@ -1,5 +1,5 @@
-let { inDoc } = require('./domTools');
-module.exports = (function () {
+let { inDoc, inViewport } = require('./domTools');
+module.exports = (function() {
   /**
    * 解析JSON
    * @param {*} json
@@ -64,32 +64,16 @@ module.exports = (function () {
   }
 
   /**
-   * 获取当前校验的节点
-   * @param {Vue} vm
-   * @param {String} field
-   */
-  function getVerifyEl(vm, field) {
-    return (vm.$verify.$protoQueue.original || {})[field];
-  }
-
-  /**
    * 滚动到当前校验的节点
    * @param {Vue} vm
    * @param {String} field
    * @param {Number} offsetTop 偏移量
    */
   function scrollToVerifyEl(vm, field, offsetTop) {
-    let el = getVerifyEl(vm, field);
+    let el = document.querySelector('[data-verify_field="info.four"]');
     //不在可见区域内时，滚动
-    if (
-      el &&
-      !(
-        el.offsetTop + el.offsetHeight / 3 >= window.pageYOffset &&
-        el.offsetTop + el.offsetHeight / 3 <
-        window.pageYOffset + window.outerHeight
-      )
-    ) {
-      scrollTo(0, el.offsetTop + (offsetTop || 0));
+    if (el && !inViewport(el)) {
+      scrollTo(0, el.getBoundingClientRect().y + (offsetTop || 0));
     }
   }
 

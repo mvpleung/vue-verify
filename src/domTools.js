@@ -31,6 +31,24 @@ module.exports = (function() {
   }
 
   /**
+   * 节点是否在可见区域内
+   * @param {Node} el 节点
+   * @param {*} offset
+   */
+  function inViewport(el, offset = 0) {
+    const box = el.getBoundingClientRect(),
+      top = box.top >= 0,
+      left = box.left >= 0,
+      bottom =
+        box.bottom <=
+        (window.innerHeight || document.documentElement.clientHeight) + offset,
+      right =
+        box.right <=
+        (window.innerWidth || document.documentElement.clientWidth) + offset;
+    return top && left && bottom && right;
+  }
+
+  /**
    * Get and remove an attribute from a node.
    *
    * @param {Node} node
@@ -235,6 +253,7 @@ module.exports = (function() {
 
   return {
     inDoc: inDoc,
+    inViewport: inViewport,
     removeClass: removeClass,
     addClass: addClass,
     apply: apply,
