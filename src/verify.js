@@ -1,12 +1,12 @@
-﻿/*
+/*
  * 校验核心js
  * @Author: focus 
  * @Date: 2017-04-14
  * @Last Modified by: liangzc
- * @Last Modified time: 2018-05-27 17:22:38
+ * @Last Modified time: 2018-05-31 12:35:28
  */
-let _ = require('lodash/object'),
-  { findDom, apply } = require('./domTools'),
+window._ = window._ || require('lodash');
+let { findDom, apply } = require('./domTools'),
   helper = require('./helper'),
   defaultRules = helper.getDefaultRules(),
   defaultConfig = {},
