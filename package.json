@@ -1,6 +1,6 @@
 {
   "name": "@mvpleung/verify",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "vue validate plugin",
   "main": "./src/index.js",
   "scripts": {
@@ -16,6 +16,9 @@
   "keywords": [
     "vue",
     "verify",
+		"分组校验",
+		"表单校验",
+		"vue 移动端校验",
     "校验"
   ],
   "bugs": {
