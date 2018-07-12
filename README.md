@@ -105,6 +105,25 @@ Vue.use(vueVerify,{
     ]
 ```
 
+#### v-verify:arg
+
+> 分组校验，v-verify:[group]
+
+```javascript
+  <input
+    v-model="name"
+    v-verify:basic="[{test: 'required', message: '请输入 name'},{test: 'mobile'}]"
+   />
+  <input
+    v-model="code"
+    v-verify:other="rules.verfifyCode"
+   />
+```
+```
+this.$verify.check('basic'); //校验组名为 basic 的表单项
+this.$verify.check('other'); //校验组名为 other 的表单项
+```
+
 #### v-remind
 > 用于校验字段的错误提示，参数类型为 [String, Model]，需要提示的字段名，可以传递 String 或者 this可访问的属性
 ```js
