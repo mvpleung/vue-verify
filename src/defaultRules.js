@@ -3,7 +3,7 @@
  * @Author: liangzc 
  * @Date: 2017-07-20
  * @Last Modified by: liangzc
- * @Last Modified time: 2018-05-20 19:16:49
+ * @Last Modified time: 2018-07-12 17:44:30
  */
 
 /**
@@ -343,12 +343,17 @@ let rules = {
     placeholder: '', //占位
     message: '{0}企业税号为15、18、20位数字或大写字母'
   },
+  base64: {
+    test: /^\s*data:([a-z]+\/[a-z0-9-+.]+(;[a-z-]+=[a-z0-9-]+)?)?(;base64)?,([a-z0-9!$&',()*+;=\-._~:@\/?%\s]*?)\s*$/i,
+    placeholder: '', //占位
+    message: '请正确输入{0}base64字符串'
+  },
   platenumber: {
-    test: /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[警京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼]{0,1}[A-Z0-9]{4}[A-Z0-9挂学警港澳试超]{1}[DF1-9]{0,1}$/,
+    test: /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{0,1}[A-Z0-9]{1}[警京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼]{0,1}[A-Z0-9]{4}[A-Z0-9挂学警港澳试超使]{1,2}[DF1-9]{0,1}$/,
     placeholder: '', //占位
     message: '{0}车牌号不正确'
   },
-  minlength: {
+  minLength: {
     //最小长度
     test: function(value, rule) {
       //rule 定义的规则的值
@@ -356,7 +361,7 @@ let rules = {
     },
     message: '请输入一个长度最少为{0}位的字符'
   },
-  maxlength: {
+  maxLength: {
     //最大长度
     test: function(value, rule) {
       return value && rule && value.length <= parseInt(rule);
