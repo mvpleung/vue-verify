@@ -1,20 +1,19 @@
-var path = require("path");
-var webpack = require("webpack");
+var path = require('path');
+var webpack = require('webpack');
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/',
-    filename: 'verify.min.js'
+    filename: 'index.js'
   },
   module: {
     rules: [
       {
         test: /\.js$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/
-      },
+        loader: 'babel-loader?cacheDirectory'
+      }
     ]
   }
 };
@@ -28,13 +27,18 @@ if (process.env.NODE_ENV === 'production') {
       }
     }),
     new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      compress: {
-        warnings: false
-      }
+      cache: true,
+      parallel: true,
+      uglifyOptions: {
+        output: {
+          beautify: false,
+          comments: false // remove all comments,
+        }
+      },
+      sourceMap: false
     }),
     new webpack.LoaderOptionsPlugin({
-      //minimize: true
+      minimize: true
     })
-  ])
+  ]);
 }
