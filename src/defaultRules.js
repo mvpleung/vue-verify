@@ -3,7 +3,7 @@
  * @Author: liangzc 
  * @Date: 2017-07-20
  * @Last Modified by: liangzc
- * @Last Modified time: 2018-07-12 17:44:30
+ * @Last Modified time: 2018-05-20 19:16:49
  */
 
 /**
@@ -353,7 +353,7 @@ let rules = {
     placeholder: '', //占位
     message: '{0}车牌号不正确'
   },
-  minLength: {
+  minlength: {
     //最小长度
     test: function(value, rule) {
       //rule 定义的规则的值
@@ -361,7 +361,7 @@ let rules = {
     },
     message: '请输入一个长度最少为{0}位的字符'
   },
-  maxLength: {
+  maxlength: {
     //最大长度
     test: function(value, rule) {
       return value && rule && value.length <= parseInt(rule);
