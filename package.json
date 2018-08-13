@@ -4,8 +4,9 @@
   "description": "vue validate plugin",
   "main": "./src/index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
-    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
   },
   "repository": {
     "type": "git",
@@ -16,21 +17,46 @@
   "keywords": [
     "vue",
     "verify",
-		"分组校验",
-		"表单校验",
-		"vue 移动端校验",
+    "分组校验",
+    "表单校验",
+    "vue 移动端校验",
     "校验"
   ],
   "bugs": {
     "url": "https://github.com/mvpleung/vue-verify/issues"
   },
   "homepage": "https://github.com/mvpleung/vue-verify#readme",
+  "dependencies": {
+    "vue": "^2.5.16"
+  },
   "devDependencies": {
-    "webpack": "^2.4.1",
-    "cross-env": "^4.0.0",
-    "babel-core": "^6.0.0",
-    "babel-loader": "^6.0.0",
-    "babel-preset-latest": "^6.0.0",
-    "lodash": "^4.17.4"
-  }
+    "@mvpleung/verify": "0.0.7",
+    "@vue/cli-plugin-babel": "^3.0.0",
+    "@vue/cli-plugin-eslint": "^3.0.0",
+    "@vue/cli-service": "^3.0.0",
+    "lodash": "^4.17.4",
+    "vue-template-compiler": "^2.5.17"
+  },
+  "babel": {
+    "presets": [
+      "@vue/app"
+    ]
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ]
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
 }

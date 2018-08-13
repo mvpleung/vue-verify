@@ -21,6 +21,12 @@ Vue.use(vueVerify, {
 });
 ```
 
+### 示例
+
+```js
+npm run serve
+```
+
 ### 如何使用
 
 ```vue
