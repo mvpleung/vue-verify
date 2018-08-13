@@ -14,7 +14,7 @@ npm install @mvpleung/verify
 import vueVerify from '@mvpleung/verify';
 Vue.use(vueVerify, {
   trigger: String, //触发校验事件，默认为全部，['blur', 'change']
-  msgbox: Function, //自定义消息提示框
+  msgbox: Function, //自定义消息提示框 function(msg){}
   scrollToEl: true, //是否滚动到校验的Dom节点
   offsetTop: Number, //滚动偏移量，配合 scrollToEl 使用
   multiple: false //是否支持批量校验
@@ -40,6 +40,8 @@ npm run serve
 	    v-model="code"
 	    v-verify="rules.verfifyCode"
 	   />
+	   <!-- 可以使用 r-remind 提示错误，或者使用 Vue.use({msgbox}) -->
+	   <label v-remind="code" />
 	   <button v-on:click="next">下一步</button>
    </div>
 </template>
