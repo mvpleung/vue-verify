@@ -7,6 +7,10 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>verify</title>
   <style>
+    body {
+      text-align: center;
+    }
+
     .container {
       text-align: left;
     }
@@ -47,7 +51,9 @@
   </noscript>
   <div id="app">
     <div class="container">
-      <label>失去焦点测试</label>
+      <div class="page-part" style="font-weight: bold;color:red;">
+        <label>* 失去焦点测试</label>
+      </div>
       <div class="page-part">
         <label>字符串测试</label>
         <input type="tel" v-model="info.first" v-verify="'required'" placeholder="first" maxlength="11" />
@@ -92,6 +98,7 @@
       </div>
     </div>
   </div>
+  <a style="margin-top: 30px;display: block;" href="https://jsfiddle.net/mvpleung/0y1md48o/">查看示例代码</a>
   <script src="https://unpkg.com/vue/dist/vue.js"></script>
   <script src="./dist/index.js"></script>
   <script>
