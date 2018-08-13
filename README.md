@@ -188,17 +188,6 @@ Vue.use(vueVerify, {
 | **max**                 | `max: 最大值`                 | `请输入一个小于等于${max}的数字`                                                                         |
 | **base**                | `base: 整除基数`              | `请输入${base}的整数倍`                                                                                  |
 
-### 行内校验规则
-
-```html
-    <input v-verify="phonenumber" v-model="phonenumber" data-verify="{error:['手机号不能为空','请正确输入手机号码']}"/>
-    <input v-verify="'required|mobile'" v-model="phonenumber" data-verify="{error:['手机号不能为空','请正确输入手机号码']}"/>
-
-
-    <input v-verify="{rule: 'phonenumber', error: ['手机号不能为空','请正确输入手机号码']}" v-model="phonenumber"/>
-    <input v-verify="{rule: 'required|mobile', error: ['手机号不能为空','请正确输入手机号码']}" v-model="phonenumber"/>
-```
-
 #### License
 
 ---
