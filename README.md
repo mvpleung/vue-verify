@@ -1,221 +1,146 @@
 # vue-verify
 
-### install
+vuejs 表单校验组件
 
-```javascript
-npm install verify-plugin
+### 安装
+
+```
+npm install @mvpleung/verify
 ```
 
-### use
+### 配置
 
-```javascript
+```js
+import vueVerify from '@mvpleung/verify';
+Vue.use(vueVerify, {
+  trigger: String, //触发校验事件，默认为全部，['blur', 'change']
+  msgbox: Function, //自定义消息提示框
+  scrollToEl: true, //是否滚动到校验的Dom节点
+  offsetTop: Number, //滚动偏移量，配合 scrollToEl 使用
+  multiple: false //是否支持批量校验
+});
+```
+
+### 如何使用
+
+```vue
 <template>
-  <div class="input-box clearFix">
-    <div>
-      <input v-model="age" v-verify="age" placeholder="age"/>
-      <label class="fl" v-remind="age"></label>
-    </div>
-    <!-- 对象字面量用法，参考指令说明 -->
-    <div>
-      <input v-model="age" v-verify="{rule: 'age'}" placeholder="age"/>
-      <label class="fl" v-remind="{field: 'age', error: ['自定义错误提示，按定义规则顺序取值']}"></label>
-    </div>
-    <div>
-      <input type="text" class="phoneIcon fl" placeholder="手机号码" v-model="regInfo.phone" v-verify="regInfo.phone">
-      <label class="fl" v-remind="regInfo.phone"></label>
-    </div>
-    <button v-on:click="submit">提交</button>
-  </div>
+   <div class="input-box clearFix">
+	  <input
+	    v-model="name"
+	    v-verify="[{test: 'required', message: '请输入 name'},{test: 'mobile'}]"
+	   />
+	  <input
+	    v-model="code"
+	    v-verify="rules.verfifyCode"
+	   />
+	   <button v-on:click="next">下一步</button>
+   </div>
 </template>
 
 <script>
-  import Vue from "vue";
-  import verify from "verify-plugin";
-  Vue.use(verify,{
-      blur:true
-  });
-  export default {
-    name: 'app',
-    data () {
-      return {
-        age:"",
-        regInfo: {
-            phone: ""
-        },
-        verifyCode: '',
-        idNumber: 0
-      }
-    },
-    verify: {
-        age:"required",
-        regInfo: {
-            phone: ["required","mobile"]
-        },
-        verifyCode: [
-          {
-            test: 'required',
-            message: 'verifyCode不能为空' //自定义提示
-         },
-          {
-            minLength: 4,
-            message: 'verifyCode 最少四位' //可不定义，使用默认提示
-         },
-          {
-            maxLength: 6,
-            message: 'verifyCode 最长六位'
+    export default {
+        name: 'app',
+        data () {
+          return {
+            name: '',
+            rules: {
+                verfifyCode: [
+                  {
+                    test: 'required',
+                    message: '验证码不能为空'
+                  },
+                  {
+                    test: /^(\+|-)?\d+($|\.\d+$)/,
+                    message: '请正确输入验证码'
+                  },
+                  {
+                    minlength: 4,
+                    message: '请输入四位验证码'
+                  }
+                ]
           }
-        ],
-        idNumber: [
-          {
-            test: 'required',
-            message: 'idNumber不能为空' //自定义提示
-          },
-          {
-            min: 10  //定义数字最小值，默认提示 “请输入一个大于等于10的数字”
-          },
-          {
-            max: 1000,
-            message: 'idNumber 最大为 1000'
-          },
-          {
-            base: 10,
-            message: 'idNumber 必须被 10 整除'
+        },
+        methods:{
+          next() {
+            if (this.$verify.check()) {
+                console.log('verify success');
+            }
           }
-        ]
-      },
-      methods:{
-        submit: function () {
-          console.log(this.$verify.check());
         }
-      }
-  }
+    }
 </script>
-```
-
-### 验证错误信息说明
-
-验证之后的错误存储在 vm.$verify.$errors 中，可自行打印出
-vm.$verify.$errorArray 存储上一次验证的错误
-
-### 配置说明
-
-```bash
-{
-    rules:{}//自定义验证方法
-    blur:Bool //失去焦点时 是否开启验证
-    msgbox: Function, //自定义消息提示框
-    force: Bool, //是否强制使用 msgBox
-    scrollToEl: Bool, //是否滚动到校验的Dom节点
-    field: { //针对输入框的单独配置
-        msgbox: Bool, //输入框单独校验时是否使用 msgBox
-        offsetTop: Number //滚动偏移量，配合 scrollToEl 使用
-    },
-    multiple: Bool //是否支持批量校验
-}
-```
-
-### 自定义属性说明
-
-[data-verify]
-
-```bash
-{
-    blur: Bool, //是否支持 blur 校验
-    replace: Object, //v-model 校验键名替换项，比如 v-model="a[index].c" with replace:{index:1} => v-model="a[1].c"
-    ignore: Bool, //是否忽略当前校验，用于动态操作校验逻辑，比如条件下的动态忽略
-    error: Array //自定义错误提示，按定义规则顺序取值
-}
 ```
 
 ### 指令说明
 
 #### v-verify
 
-在表单控件元素上创建数据的验证规则，他会自动匹配要验证的值以及验证的规则。
+> 参数为数组
 
-##### v-verify 指令支持对象字面量（覆盖自定义属性）
+- 对象格式规则配置
 
-```bash
-{
-    rule: 'require', //校验规则,仅支持字符串
-    blur: Bool, //是否支持 blur 校验
-    replace: Object, //v-model 校验键名替换项，比如 v-model="a[index].c" with replace:{index:1} => v-model="a[1].c"
-    ignore: Bool, //是否忽略当前校验，用于动态操作校验逻辑，比如条件下的动态忽略
-    error: Array //自定义错误提示，按定义规则顺序取值
-}
+```js
+[
+  {
+    test: [String, Function(value), RegExp], //校验规则,String: 默认定义的规则
+    message: String, //自定义错误提示
+    trigger: String //出发校验事件，['blur', 'change']
+  }
+];
 ```
 
-##### v-verify 修饰符说明
+- 符串格式规则配置（[./defaultRules][1]）
 
-> 该指令最后一个修饰符为自定义分组
-
-```javascript
-//自定义teacher分组
-v - verify.teacher;
-//自定义student分组
-v - verify.student;
-
-//验证时可分开进行验证
-
-//验证student 分组
-this.$verify.check('student');
-//验证teacher 分组
-this.$verify.check('teacher');
-//验证所有
-this.$verify.check();
+```js
+[
+  'required|mobile' //使用默认定义的规则，多条规则以 '|' 分割，不能自定义 message
+];
 ```
 
-##### v-verify 指令也可使用 arg 参数进行验证分组
+- 混合格式规则
 
-> 如果同时使用修饰符和 arg 分组 则 arg 会覆盖修饰符分组\*\*
-
-```javascript
-v-verify:student
-//验证student 分组
-this.$verify.check("student")
+```js
+[
+  {
+    test: [String, Function(value), Test], //校验规则,String: 默认定义的规则， Test 为正则
+    message: String, //自定义错误提示
+    trigger: String //出发校验事件，['blur', 'change']
+  },
+  'required|mobile'
+];
 ```
 
-##### v-remind 指令支持对象字面量（覆盖自定义属性）
+#### v-remind
 
-```javascript
-{
-    field: 'code', //校验提示字段，仅支持字符串
-    blur: Bool, //是否支持 blur 校验
-    replace: Object, //v-model 校验键名替换项，比如 v-model="a[index].c" with replace:{index:1} => v-model="a[1].c"
-    ignore: Bool, //是否忽略当前校验，用于动态操作校验逻辑，比如条件下的动态忽略
-    error: Array //自定义错误提示，按定义规则顺序取值
-}
+> 用于校验字段的错误提示，参数类型为 [String, Model]，需要提示的字段名，可以传递 String 或者 this 可访问的属性
+
+```js
+<lable v-remind="name" />
 ```
-
-##### v-remind 修饰符说明
-
-> .join 展示所有错误 用逗号隔开
 
 ### 方法说明
 
-#### config
+- $verify.config
 
-> 自定义配置，此配置会覆盖全局配置，仅在当前页面有效
+  接收自定义配置，优先级>全局配置
 
-this.$verify.config(options)
+- (Boolean) $verify.validate
+  手动校验某个字段值
 
-#### validate
+  - field `String` 校验字段名
+  - rule? `[String, Array]` 校验规则，非必填，默认读取 v-verify 配置规则
+  - validOnly? `Boolean` 是否仅作为校验，不提示错误信息，非必填
 
-> 单独校验某个字段 field: 字段名，rule：校验规则（可空，默认取配置规则），validOnly：是否仅校验值，不弹窗提示
+- (Boolean) $verify.check
+  校验所有
 
-this.$verify.validate(field, rule, validOnly)
+  - group? `String` 校验组名，非必填
+  - validOnly? `Boolean` 是否仅作为校验，不提示错误信息，非必填
 
-#### check
-
-> 校验配置了 v-verify 指令得所有字段，group：组名（参考指令说明中的分组，可空），validOnly：是否仅校验值，不弹窗提示
-
-this.$verify.check(group, validOnly)
-
-#### errors
-
-> 返回错误列表 field：字段名（为空返回全部错误）
-
-this.$verify.errors(field)
+- (String/Array) $verify.errors
+  获取错误提示
+  - field? `String` 需要获取某个字段错误提示时，传递此字段，不传返回全部错误信息
 
 ### 默认规则
 
@@ -274,97 +199,8 @@ this.$verify.errors(field)
     <input v-verify="{rule: 'required|mobile', error: ['手机号不能为空','请正确输入手机号码']}" v-model="phonenumber"/>
 ```
 
-### 自定义验证规则一
-
-```js
-import Vue from 'vue';
-import verify from 'verify-plugin';
-var myRules = {
-  max6: {
-    test: function(val) {
-      if (val.length > 6) {
-        return false;
-      }
-      return true;
-    },
-    message: '最大为6位'
-  }
-};
-Vue.use(verify, {
-  rules: myRules
-});
-export default {
-  name: 'app',
-  data() {
-    return {
-      age: '',
-      teacher: '',
-      regInfo: {
-        phone: ''
-      }
-    };
-  },
-  verify: {
-    age: 'required',
-    teacher: 'max6',
-    regInfo: {
-      phone: ['required', 'mobile']
-    }
-  },
-  methods: {
-    submit: function() {
-      console.log(this.$verify.check());
-    }
-  }
-};
-```
-
-### 自定义验证规则二
-
-```js
-import Vue from 'vue';
-import verify from 'verify-plugin';
-
-export default {
-  name: 'app',
-  data() {
-    return {
-      age: '',
-      teacher: '',
-      regInfo: {
-        phone: ''
-      }
-    };
-  },
-  verify: {
-    age: 'required',
-    teacher: [
-      {
-        test: function(val) {
-          if (val.length > 6) {
-            return false;
-          }
-          return true;
-        },
-        message: '最大为6位'
-      }
-    ],
-    regInfo: {
-      phone: ['required', 'mobile']
-    }
-  },
-  methods: {
-    submit: function() {
-      console.log(this.$verify.check());
-    }
-  }
-};
-```
-
 #### License
 
 ---
 
 [LICENSE](https://github.com/mvpleung/vue-verify/blob/master/LICENSE)
-
-[1]: src/defaultRules.js
