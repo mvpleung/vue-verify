@@ -23,9 +23,7 @@ Vue.use(vueVerify, {
 
 ### 示例
 
-```js
-npm run serve
-```
+Website at https://mvpleung.github.io/vue-verify/
 
 ### 如何使用
 

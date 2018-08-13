@@ -87,6 +87,7 @@ module.exports = (function() {
     return (
       !options.multiple &&
       !validOnly &&
+      options.msgbox &&
       options.msgbox !== false &&
       !(
         vm.$options.verify &&
