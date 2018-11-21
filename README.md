@@ -18,7 +18,7 @@ Vue.use(vueVerify, {
   scrollToEl: true, //是否滚动到校验的Dom节点
   offsetTop: Number, //滚动偏移量，配合 scrollToEl 使用
   multiple: false, //是否支持批量校验
-  rules: Object //自定义校验规则,eg: { custom: {test: /.+@.+\..+/, message: '邮箱格式错误'}, ...}
+  rules: Object //自定义校验规则,e.g.: { custom: {test: /.+@.+\..+/, message: '邮箱格式错误'}, ...}
 });
 ```
 
